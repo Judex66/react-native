@@ -1,28 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight } from 'react-native';
 import React from 'react'
+import { store } from './redux'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import Header from './components/Header'
-import { configureStore,createSlice } from '@reduxjs/toolkit';
-const initialState={
-counter:0
-}
-const counterSlice=createSlice({
-  name:'counter',
-  initialState,
-  reducers:{
-    increment:(state)=>{
-      state.counter+=1
-    },
-    decrement:(state)=>{
-      state.counter-=1
-    }
+import { useState } from 'react';
+//import { configureStore,createSlice } from '@reduxjs/toolkit';
+import { useGetUsersQuery, useAddUserMutation, useDeleteUserMutation } from './redux';
+import Item from './components/ItemName.js';
+import { FlatList } from 'react-native-web';
+
+const handleAddProduct = async () => {
+  if(newProduct) {
+    await addProduct({name: newProduct}).unwrap();
+    setNewProduct('');
   }
-})
-const store = configureStore({
-  reducer:counterSlice.reducer,
-})
+}
+
+const handleDeleteProduct = async (id) => {
+  await deleteProduct(id).unwrap();
+}
+
+
 export default function App() {
+  
   return (
    <Provider store={store}>
     <Counter/>
@@ -30,24 +31,29 @@ export default function App() {
   );
 }
 function Counter(){
-  const counter=useSelector((state)=>state.counter);
-  const dispatch=useDispatch()
+  const [count, setCount] = useState('');
+const [newUser, setNewUser] = useState('');
+const {data = [], isLoading} = useGetUsersQuery(count);
+const [addUser, {isError}] = useAddUserMutation();
+const [deleteUser] = useDeleteUserMutation();
+  // const counter=useSelector((state)=>state.counter);
+  // const dispatch=useDispatch()
+  if (isLoading) return <Text >Loading...</Text>
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
     <Header/>
-    <Text>Counter:{counter}</Text>
-    <StatusBar style="auto" />
-    <Button title='+' onPress={()=>{dispatch(counterSlice.actions.increment())}}/>
-    <Button title="-" onPress={()=>{dispatch(counterSlice.actions.decrement())}}/>
-  </View>
+    {data.map(item => (
+      <TouchableHighlight key={item.id}>
+          <Text >{item.name}</Text>
+      </TouchableHighlight>
+      ))}
+  </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height:50,
+    flexDirection: 'column',
   },
 });
