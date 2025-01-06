@@ -1,11 +1,27 @@
-import React from "react";
-import { StyleSheet,TouchableHighlight,Text } from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
 
-export default function Item(item){
-<TouchableHighlight>
-    <Text style={style.item}>{item.name}</Text>
-</TouchableHighlight>
+export default function ItemLocal({el}) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>{el.name}</Text>
+      <Text style={styles.text}>{el.username}</Text>
+      <Text style={styles.text}>{el.address.street}</Text>
+      <Text style={styles.text}>{el.address.city}</Text>
+    </View>
+  );
 }
-const style=StyleSheet.create({
-     item:{}
-})
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection:"column",
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
+  },
+  text:{
+    color:'white',
+  }
+});
