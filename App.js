@@ -31,11 +31,21 @@ export default function App() {
   );
 }
 function Counter(){
-  const [count, setCount] = useState('');
-const [newUser, setNewUser] = useState('');
-const {data = [], isLoading} = useGetUsersQuery(count);
-const [addUser, {isError}] = useAddUserMutation();
-const [deleteUser] = useDeleteUserMutation();
+  const [text, setText] = useState('');
+  const {status, error} = useSelector(state => state.todos);
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.todos.todos);
+  const handleAction = () => {
+    if(text.trim().length) {
+      dispatch(addNewTodo(text));
+      setText('');
+    }
+  }
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
+
   if (isLoading) return <Text >Loading...</Text>
   return (
     <SafeAreaView style={styles.container}>
@@ -44,7 +54,7 @@ const [deleteUser] = useDeleteUserMutation();
     <Header/>
     {data.map(item => (
       <TouchableHighlight style={styles.apiContainer} key={item.id}>
-         <ItemLocal el={item}/> 
+         <ItemLocal el={item} {...item}/> 
       </TouchableHighlight>
       ))}
           

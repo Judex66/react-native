@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function ItemLocal({el}) {
+export default function ItemLocal({name,username,address}) {
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{el.name}</Text>
-      <Text style={styles.text}>{el.username}</Text>
-      <Text style={styles.text}>{el.address.street}</Text>
-      <Text style={styles.text}>{el.address.city}</Text>
+      <Text style={styles.text}>{name}</Text>
+      <Text style={styles.text}>{username}</Text>
+      <Text style={styles.text}>{address.street}</Text>
+      <Text style={styles.text}>{address.city}</Text>
     </View>
   );
 }
