@@ -1,13 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import {useDeleteUserMutation } from '../redux'
 
 export default function ItemLocal({el}) {
+  const [deleteUser] = useDeleteUserMutation();
+  
+  const handleDeleteProduct = async (id) => {
+    await deleteUser(id).unwrap();
+    console.log('deleted')
+  }
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onPress={() => {console.log('delete');}}>
       <Text style={styles.text}>{el.name}</Text>
       <Text style={styles.text}>{el.username}</Text>
       <Text style={styles.text}>{el.address.street}</Text>
       <Text style={styles.text}>{el.address.city}</Text>
+<Button onPress={() => { handleDeleteProduct(el.id)}} title="Delete" color="#841584" />
     </View>
   );
 }

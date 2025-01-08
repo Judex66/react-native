@@ -1,60 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, TouchableHighlight, ScrollView } from 'react-native';
+import { StyleSheet} from 'react-native';
 import React from 'react'
 import { store } from './redux'
-import { Provider, useDispatch, useSelector } from 'react-redux'
-import Header from './components/Header'
-import { useState } from 'react';
-//import { configureStore,createSlice } from '@reduxjs/toolkit';
-import { useGetUsersQuery, useAddUserMutation, useDeleteUserMutation } from './redux';
-import ItemLocal from './components/ItemName.js';
-import { FlatList } from 'react-native-web';
-
-const handleAddProduct = async () => {
-  if(newProduct) {
-    await addProduct({name: newProduct}).unwrap();
-    setNewProduct('');
-  }
-}
-
-const handleDeleteProduct = async (id) => {
-  await deleteProduct(id).unwrap();
-}
-
-
+import { Provider } from 'react-redux'
+import Main from './components/Main';
+import Navigate from './components/navigation'
 export default function App() {
   
   return (
-   <Provider store={store}>
-    <Counter/>
-   </Provider>
-  );
+    <Provider store={store}>
+  <Navigate/>
+  </Provider>)
 }
-function Counter(){
-  const [count, setCount] = useState('');
-const [newUser, setNewUser] = useState('');
-const {data = [], isLoading} = useGetUsersQuery(count);
-const [addUser, {isError}] = useAddUserMutation();
-const [deleteUser] = useDeleteUserMutation();
-  if (isLoading) return <Text >Loading...</Text>
-  return (
-    <SafeAreaView style={styles.container}>
-    
-    <ScrollView >
-    <Header/>
-    {data.map(item => (
-      <TouchableHighlight style={styles.apiContainer} key={item.id}>
-         <ItemLocal el={item}/> 
-      </TouchableHighlight>
-      ))}
-          
-        </ScrollView>
-  </SafeAreaView>
-  )
-}
+
 const styles = StyleSheet.create({
 apiContainer:{
   flex:1,
+  paddingTop:25,
 },
 apiContainer2:{
   flex:1,

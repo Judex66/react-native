@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const usersApi = createApi({
-    reducerPath: 'goodsApi',
+    reducerPath: 'UsersApi',
     tagTypes: ['Users'],
-    baseQuery: fetchBaseQuery({baseUrl: 'https://jsonplaceholder.typicode.com/'}),
+    //baseQuery: fetchBaseQuery({baseUrl: 'https://jsonplaceholder.typicode.com/'}),
+   baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:3001/'}),
     endpoints: (build) => ({
         getUsers: build.query({
             query: (limit = '') => `users?${limit && `_limit=${limit}`}`,
@@ -13,6 +14,9 @@ export const usersApi = createApi({
                   { type: 'Users', id: 'LIST' },
                 ]
               : [{ type: 'Users', id: 'LIST' }],
+        }),
+        getUser: build.query({
+            query: (id) => `users/${id}`,
         }),
         addUser: build.mutation({
             query: (body) => ({
@@ -32,4 +36,4 @@ export const usersApi = createApi({
     })
 });
 
-export const {useGetUsersQuery, useAddUserMutation, useDeleteUserMutation} = usersApi;
+export const {useGetUsersQuery, useGetUserQuery,  useAddUserMutation, useDeleteUserMutation} = usersApi;
