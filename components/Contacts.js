@@ -16,11 +16,8 @@ import ItemLocal from './ItemName.js';
     return (
       <SafeAreaView style={styles.container}>
       
-      <ScrollView >
-      <Header/>
+
       <View>Contacts</View>
-            
-          </ScrollView>
     </SafeAreaView>
     )
   }

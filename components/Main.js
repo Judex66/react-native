@@ -1,29 +1,29 @@
 
-import { StyleSheet, Text, SafeAreaView, TouchableHighlight, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Button, TouchableHighlight, ScrollView } from 'react-native';
 import React from 'react'
 import Header from './Header'
 import { useState } from 'react';
 import { useGetUsersQuery } from '../redux';
 import ItemLocal from './ItemName.js';
 
- export default function Main(){
-    const [count, setCount] = useState('');
-//   const [newUser, setNewUser] = useState('');
-  const {data = [], isLoading} = useGetUsersQuery(count);
-//   const [addUser, {isError}] = useAddUserMutation();
+ export default function Main({navigation}){
+    const {data = [], isLoading} = useGetUsersQuery();
+
   
     if (isLoading) return <Text >Loading...</Text>
     return (
-      <ScrollView >
+      <View >
       <Header/>
-      <Text>wdwadwdad</Text>
-      {data.map(item => (
-        <TouchableHighlight style={styles.apiContainer} key={item.id}>
-           <ItemLocal el={item}   onPress={() => {console.log('delete');}}/>
-        </TouchableHighlight>
-        ))}
-            
-          </ScrollView>
+            <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Contacts')}>
+            <ItemLocal el={item}/>
+          </TouchableOpacity>
+        )}
+      />
+          </View>
     )
   }
   const styles = StyleSheet.create({
