@@ -10,11 +10,12 @@ export default function ItemLocal({el, navigation }) {
   //   console.log('deleted')
   // }
   return (
-    <View style={styles.container} onPress={() => {console.log('delete');}}>
+    <View style={styles.container} >
       <Text style={styles.text}>{el.name}</Text>
       <Text style={styles.text}>{el.username}</Text>
       <Text style={styles.text}>{el.address.street}</Text>
       <Text style={styles.text}>{el.address.city}</Text>
+
     </View>
   );
 }

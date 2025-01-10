@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
-
-export default function FullData() {
+import { useGetUserQuery } from '../redux';
+export default function FullData({route}) {
+    const { id } = route.params;
     const {data = [], isLoading} = useGetUserQuery(id);
+    console.log(data)
+    if (isLoading) return <Text >Loading...</Text>
   return (
    <View style={styles.container}>
-         <Text style={styles.text}>{el.name}</Text>
-         <Text style={styles.text}>{el.username}</Text>
-         <Text style={styles.text}>{el.address.street}</Text>
-         <Text style={styles.text}>{el.address.city}</Text>
+         <Text style={styles.text}>{data.name}</Text>
+         <Text style={styles.text}>{data.username}</Text>
+         <Text style={styles.text}>{data.address.street}</Text>
        </View>
   );
 }
@@ -15,7 +17,7 @@ export default function FullData() {
 const styles = StyleSheet.create({
   container: {
     flex: 0.1,
-    flexDirection:"row",
+    flexDirection:"column",
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',

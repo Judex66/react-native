@@ -12,18 +12,20 @@ import ItemLocal from './ItemName.js';
   
     if (isLoading) return <Text >Loading...</Text>
     return (
-      <View >
+      <ScrollView>      <View >
       <Header/>
             <FlatList
         data={data}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('Contacts')}>
+          onPress={() => {navigation.navigate('FullData', {  id: item.id })} }>
             <ItemLocal el={item}/>
           </TouchableOpacity>
         )}
       />
           </View>
+          </ScrollView>
+
     )
   }
   const styles = StyleSheet.create({
